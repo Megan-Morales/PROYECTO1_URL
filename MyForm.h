@@ -65,7 +65,7 @@ namespace Proyecto1MeganMorales1221120 {
 			// button1
 			// 
 			this->button1->BackColor = System::Drawing::Color::PaleTurquoise;
-			this->button1->Font = (gcnew System::Drawing::Font(L"PLAY FLOLALIA", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->button1->Font = (gcnew System::Drawing::Font(L"Papyrus", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button1->Location = System::Drawing::Point(56, 106);
 			this->button1->Name = L"button1";
@@ -78,7 +78,7 @@ namespace Proyecto1MeganMorales1221120 {
 			// button2
 			// 
 			this->button2->BackColor = System::Drawing::Color::Aquamarine;
-			this->button2->Font = (gcnew System::Drawing::Font(L"PLAY FLOLALIA", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->button2->Font = (gcnew System::Drawing::Font(L"Papyrus", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button2->Location = System::Drawing::Point(56, 155);
 			this->button2->Name = L"button2";
@@ -90,7 +90,7 @@ namespace Proyecto1MeganMorales1221120 {
 			// button3
 			// 
 			this->button3->BackColor = System::Drawing::Color::Teal;
-			this->button3->Font = (gcnew System::Drawing::Font(L"PLAY FLOLALIA", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->button3->Font = (gcnew System::Drawing::Font(L"Papyrus", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button3->Location = System::Drawing::Point(56, 198);
 			this->button3->Name = L"button3";
@@ -103,11 +103,11 @@ namespace Proyecto1MeganMorales1221120 {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"PLAY FLOLALIA", 13.8F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->label1->Font = (gcnew System::Drawing::Font(L"Papyrus", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->label1->Location = System::Drawing::Point(51, 24);
+			this->label1->Location = System::Drawing::Point(27, 32);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(164, 27);
+			this->label1->Size = System::Drawing::Size(193, 24);
 			this->label1->TabIndex = 3;
 			this->label1->Text = L"PROYECTO NO.01";
 			this->label1->Click += gcnew System::EventHandler(this, &MyForm::label1_Click);
@@ -115,11 +115,11 @@ namespace Proyecto1MeganMorales1221120 {
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Font = (gcnew System::Drawing::Font(L"PLAY FLOLALIA", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->label2->Font = (gcnew System::Drawing::Font(L"Papyrus", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->label2->Location = System::Drawing::Point(52, 61);
+			this->label2->Location = System::Drawing::Point(39, 67);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(149, 23);
+			this->label2->Size = System::Drawing::Size(162, 24);
 			this->label2->TabIndex = 4;
 			this->label2->Text = L"--- PARTY MIX ---";
 			// 

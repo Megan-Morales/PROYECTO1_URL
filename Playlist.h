@@ -1,4 +1,6 @@
 #pragma once
+#include "Canciones.h"
+#include "List.h"
 
 namespace Proyecto1MeganMorales1221120 {
 
@@ -8,6 +10,7 @@ namespace Proyecto1MeganMorales1221120 {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::IO; //Librería utilizada para poder utilizar el FILE
 
 	/// <summary>
 	/// Resumen de Playlist
@@ -15,16 +18,21 @@ namespace Proyecto1MeganMorales1221120 {
 	public ref class Playlist : public System::Windows::Forms::Form
 	{
 	public:
+		List<Canciones>* playlist;
+		
 		Playlist(void)
 		{
 			InitializeComponent();
+			
 			//
 			//TODO: agregar código de constructor aquí
 			//
+			playlist = new List<Canciones>();
 		}
 
 	protected:
 		/// <summary>
+		/// 
 		/// Limpiar los recursos que se estén usando.
 		/// </summary>
 		~Playlist()
@@ -133,7 +141,7 @@ namespace Proyecto1MeganMorales1221120 {
 			this->listFila->ItemHeight = 16;
 			this->listFila->Location = System::Drawing::Point(628, 213);
 			this->listFila->Name = L"listFila";
-			this->listFila->Size = System::Drawing::Size(271, 84);
+			this->listFila->Size = System::Drawing::Size(271, 468);
 			this->listFila->TabIndex = 4;
 			// 
 			// label1
@@ -294,23 +302,98 @@ namespace Proyecto1MeganMorales1221120 {
 
 		}
 #pragma endregion
-	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 
+private: void restablecerPlaylist() {
+	
+		playlist->clear();
+		listPlaylist->Items->Clear();
+		
+}
+
+	   void MarshalString(String^ s, string& os) {
+		   using namespace Runtime::InteropServices;
+		   const char* chars =
+			   (const char*)(Marshal::StringToHGlobalAnsi(s)).ToPointer();
+		   os = chars;
+		   Marshal::FreeHGlobal(IntPtr((void*)chars));
+	   }
+
+	private: void llenarListBox() {
+		
+		int contador=0;
+		while (playlist->get(contador)!=nullptr) {
+			
+			string Cancion;
+			string Artista;
+			Cancion=playlist->get(contador)->getName();
+			Artista =playlist->get(contador)->getArtist();
+			String^ cancion= gcnew String(Cancion.c_str());
+			String^ artista = gcnew String(Artista.c_str());
+			listPlaylist->Items->Add(contador + " - " + cancion + " - "+ artista);
+			contador++;
+		}
+		
+	}
+	
+private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+
+		
 		ofdImportar->Filter = "Archivos separados por coma (csv) | *.csv";
 		ofdImportar->FileName = "";
 
 		if (ofdImportar->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
 			
-			
+			restablecerPlaylist();
 
+			//Se utiliza el objeto File para leer el archivo solo cuando el FileName es correcto
+			//Importante haber llamado al namespace System::IO antes de usar File
 
+			array<String^>^ archivoLineas = File::ReadAllLines(ofdImportar->FileName);
 
+			if (archivoLineas->Length > 0) {
+				//LLenar list playlist
+				for (int i = 0; i < archivoLineas->Length; i++) {
+					array<String^>^ columnaArchivo = archivoLineas[i]->Split(',');
+					int j = 0;
+
+					while (j < columnaArchivo->Length) {
+						array<String^>^ nomCancionArtista = columnaArchivo[j]->Split('-');
+							
+						if (nomCancionArtista->Length >= 2) {
+							string nameCancion;
+							string nameArtista;
+							MarshalString(nomCancionArtista[0], nameCancion);
+							MarshalString(nomCancionArtista[1], nameArtista);
+							Canciones* cancion;
+							if (nameArtista=="") {
+								Canciones* cancion = new Canciones(nameCancion, "Desconocido");
+							}
+							else {
+								Canciones* cancion = new Canciones(nameCancion, nameArtista);
+							}
+							playlist->add(cancion);
+						}
+						else if (nomCancionArtista->Length == 1) {
+							string nameCancion;
+							MarshalString(nomCancionArtista[0], nameCancion);
+							Canciones* cancion = new Canciones(nameCancion, "Desconocido");
+							playlist->add(cancion);
+
+						}
+						j++;
+					}
+				}
+				llenarListBox();		
+			}
 		}
-			
-
-
+		else {
+			MessageBox::Show("No se seleccionó ningún archivo"
+				, "Archivo no seleccionado"
+				, MessageBoxButtons::OK
+				, MessageBoxIcon::Exclamation);
+		}
 	}
-	private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e) {
+private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
 private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {
 }
