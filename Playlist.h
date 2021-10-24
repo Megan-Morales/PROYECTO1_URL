@@ -195,6 +195,7 @@ namespace Proyecto1MeganMorales1221120 {
 			this->btnExportar->TabIndex = 1;
 			this->btnExportar->Text = L"Exportar playlist";
 			this->btnExportar->UseVisualStyleBackColor = true;
+			this->btnExportar->Click += gcnew System::EventHandler(this, &Playlist::btnExportar_Click);
 			// 
 			// listPlaylist
 			// 
@@ -722,6 +723,7 @@ private: System::Void btnReproducir_Click(System::Object^ sender, System::EventA
 			listPlaylist->Items->Clear();
 			llenarListBox();
 		}
+		
 		else {
 			MessageBox::Show("No se seleccionó ningún archivo"
 				, "Archivo no seleccionado"
@@ -729,6 +731,28 @@ private: System::Void btnReproducir_Click(System::Object^ sender, System::EventA
 				, MessageBoxIcon::Exclamation);
 		}
 			
+		
+		
+}
+private: System::Void btnExportar_Click(System::Object^ sender, System::EventArgs^ e) {
+
+		saveFileDialog1->Filter = "Archivos separados por coma (csv) | *.csv";
+		
+		if (saveFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+			String^ playListActual;
+			for (int i = 1; i < playlist->getSize() + 1; i++) {
+				playListActual += ""+ listPlaylist->Items[i]+",";
+			}
+
+			File::WriteAllText(saveFileDialog1->FileName, playListActual);
+			MessageBox::Show("Archivo guardado exitosamente"
+				, "Operación exitosa"
+				, MessageBoxButtons::OK
+				, MessageBoxIcon::Information);
+		}
+		
+		
+	
 		
 		
 }
