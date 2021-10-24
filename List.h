@@ -1,11 +1,14 @@
 #pragma once
+#include "Ordenamiento1.h"
+
+
 
 template <typename T>
 class List
 {
 	struct Node
 	{
-		T* item;
+		T* item ;
 		Node* next;
 
 		Node(T* item) {
@@ -61,9 +64,56 @@ public:
 	void clear() {
 		this->head = nullptr;
 		this->tail = nullptr; 
-		this-> size = 0;
-
+		this->size = 0;
 	}
 
+	List<T>* bubbleSort(Ordenamiento1<T>* comparator) {
+		Node** i = &(this->head);
+
+		while (*i != nullptr) {
+
+			Node** j = &(*i)->next;
+
+			
+			while (*j != nullptr) {
+				T** itemA = &(*i)->item;	
+				T** itemB = &(*j)->item;
+				
+				
+				if (comparator->compare(**itemA, **itemB) > 0) {
+					T* aux = *itemA;
+					*itemA = *itemB;
+					*itemB = aux;
+				}
+				
+				j = &(*j)->next;
+			}
+
+			i = &(*i)->next;
+		}
+		
+		return this;
+	}
+
+	void RemoveAt(int index) {
+
+		Node* temp = new Node();
+		temp = header;
+		int count = 0;
+		while (temp != nullptr) {
+
+			if (index == 0) {
+				header = temp->next;
+				break;
+			}
+			if (index > 0 && count == (index - 1)) {
+				temp->next = temp->next->next;
+			}
+
+			count++;
+			temp = temp->next;
+		}
+		this->size--;
+	}
 };
 

@@ -123,6 +123,9 @@
     <ClCompile Include="Canciones.cpp" />
     <ClCompile Include="List.cpp" />
     <ClCompile Include="MyForm.cpp" />
+    <ClCompile Include="Ordenamiento1.cpp" />
+    <ClCompile Include="OrdenarPorNombre.cpp" />
+    <ClCompile Include="OrdneraPorArtista.cpp" />
     <ClCompile Include="Playlist.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -131,6 +134,9 @@
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="Ordenamiento1.h" />
+    <ClInclude Include="OrdenarPorNombre.h" />
+    <ClInclude Include="OrdneraPorArtista.h" />
     <ClInclude Include="Playlist.h">
       <FileType>CppForm</FileType>
     </ClInclude>

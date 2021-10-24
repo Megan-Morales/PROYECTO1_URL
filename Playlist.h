@@ -1,6 +1,8 @@
 #pragma once
 #include "Canciones.h"
 #include "List.h"
+#include <string>
+#include "OrdenarPorNombre.h"
 
 namespace Proyecto1MeganMorales1221120 {
 
@@ -126,19 +128,19 @@ namespace Proyecto1MeganMorales1221120 {
 			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
 			this->btnReproducir = (gcnew System::Windows::Forms::Button());
 			this->groupBox3 = (gcnew System::Windows::Forms::GroupBox());
+			this->bntSiguiente = (gcnew System::Windows::Forms::Button());
+			this->btnAnterior = (gcnew System::Windows::Forms::Button());
+			this->btnReproduccionAleatoria = (gcnew System::Windows::Forms::Button());
+			this->btnReproduccionSecuencial = (gcnew System::Windows::Forms::Button());
+			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
+			this->btnEliminar = (gcnew System::Windows::Forms::Button());
+			this->label6 = (gcnew System::Windows::Forms::Label());
+			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->btnAgregarCancion = (gcnew System::Windows::Forms::Button());
 			this->label8 = (gcnew System::Windows::Forms::Label());
 			this->btnSincronizar = (gcnew System::Windows::Forms::Button());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
-			this->label5 = (gcnew System::Windows::Forms::Label());
-			this->label6 = (gcnew System::Windows::Forms::Label());
-			this->btnEliminar = (gcnew System::Windows::Forms::Button());
-			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
-			this->btnReproduccionSecuencial = (gcnew System::Windows::Forms::Button());
-			this->btnReproduccionAleatoria = (gcnew System::Windows::Forms::Button());
-			this->btnAnterior = (gcnew System::Windows::Forms::Button());
-			this->bntSiguiente = (gcnew System::Windows::Forms::Button());
 			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox5 = (gcnew System::Windows::Forms::TextBox());
 			this->label7 = (gcnew System::Windows::Forms::Label());
@@ -236,6 +238,7 @@ namespace Proyecto1MeganMorales1221120 {
 			this->btnCancion->TabIndex = 7;
 			this->btnCancion->Text = L"Nombre de la canción";
 			this->btnCancion->UseVisualStyleBackColor = false;
+			this->btnCancion->Click += gcnew System::EventHandler(this, &Playlist::btnCancion_Click);
 			// 
 			// label3
 			// 
@@ -349,6 +352,109 @@ namespace Proyecto1MeganMorales1221120 {
 			this->groupBox3->TabStop = false;
 			this->groupBox3->Text = L"Funciones de la fila de reproducción";
 			// 
+			// bntSiguiente
+			// 
+			this->bntSiguiente->BackColor = System::Drawing::Color::Honeydew;
+			this->bntSiguiente->Font = (gcnew System::Drawing::Font(L"Papyrus", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->bntSiguiente->Location = System::Drawing::Point(133, 397);
+			this->bntSiguiente->Name = L"bntSiguiente";
+			this->bntSiguiente->Size = System::Drawing::Size(70, 33);
+			this->bntSiguiente->TabIndex = 24;
+			this->bntSiguiente->Text = L"-->";
+			this->bntSiguiente->UseVisualStyleBackColor = false;
+			// 
+			// btnAnterior
+			// 
+			this->btnAnterior->BackColor = System::Drawing::Color::Honeydew;
+			this->btnAnterior->Font = (gcnew System::Drawing::Font(L"Papyrus", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->btnAnterior->Location = System::Drawing::Point(26, 397);
+			this->btnAnterior->Name = L"btnAnterior";
+			this->btnAnterior->Size = System::Drawing::Size(70, 33);
+			this->btnAnterior->TabIndex = 23;
+			this->btnAnterior->Text = L"<--";
+			this->btnAnterior->UseVisualStyleBackColor = false;
+			// 
+			// btnReproduccionAleatoria
+			// 
+			this->btnReproduccionAleatoria->BackColor = System::Drawing::Color::Honeydew;
+			this->btnReproduccionAleatoria->Font = (gcnew System::Drawing::Font(L"Papyrus", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->btnReproduccionAleatoria->Location = System::Drawing::Point(13, 358);
+			this->btnReproduccionAleatoria->Name = L"btnReproduccionAleatoria";
+			this->btnReproduccionAleatoria->Size = System::Drawing::Size(190, 33);
+			this->btnReproduccionAleatoria->TabIndex = 22;
+			this->btnReproduccionAleatoria->Text = L"Reproducción aleatoria";
+			this->btnReproduccionAleatoria->UseVisualStyleBackColor = false;
+			// 
+			// btnReproduccionSecuencial
+			// 
+			this->btnReproduccionSecuencial->BackColor = System::Drawing::Color::Honeydew;
+			this->btnReproduccionSecuencial->Font = (gcnew System::Drawing::Font(L"Papyrus", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->btnReproduccionSecuencial->Location = System::Drawing::Point(13, 319);
+			this->btnReproduccionSecuencial->Name = L"btnReproduccionSecuencial";
+			this->btnReproduccionSecuencial->Size = System::Drawing::Size(190, 33);
+			this->btnReproduccionSecuencial->TabIndex = 14;
+			this->btnReproduccionSecuencial->Text = L"Reproducción secuencial";
+			this->btnReproduccionSecuencial->UseVisualStyleBackColor = false;
+			// 
+			// textBox3
+			// 
+			this->textBox3->Location = System::Drawing::Point(159, 238);
+			this->textBox3->Name = L"textBox3";
+			this->textBox3->Size = System::Drawing::Size(44, 31);
+			this->textBox3->TabIndex = 21;
+			// 
+			// btnEliminar
+			// 
+			this->btnEliminar->BackColor = System::Drawing::Color::Honeydew;
+			this->btnEliminar->Font = (gcnew System::Drawing::Font(L"Papyrus", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->btnEliminar->Location = System::Drawing::Point(26, 224);
+			this->btnEliminar->Name = L"btnEliminar";
+			this->btnEliminar->Size = System::Drawing::Size(127, 64);
+			this->btnEliminar->TabIndex = 20;
+			this->btnEliminar->Text = L"Eliminar la canción número: ";
+			this->btnEliminar->UseVisualStyleBackColor = false;
+			// 
+			// label6
+			// 
+			this->label6->AutoSize = true;
+			this->label6->Font = (gcnew System::Drawing::Font(L"Papyrus", 7.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label6->Location = System::Drawing::Point(7, 125);
+			this->label6->Name = L"label6";
+			this->label6->Size = System::Drawing::Size(52, 19);
+			this->label6->TabIndex = 19;
+			this->label6->Text = L"Artista:";
+			// 
+			// label5
+			// 
+			this->label5->AutoSize = true;
+			this->label5->Font = (gcnew System::Drawing::Font(L"Papyrus", 7.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label5->Location = System::Drawing::Point(7, 88);
+			this->label5->Name = L"label5";
+			this->label5->Size = System::Drawing::Size(58, 19);
+			this->label5->TabIndex = 18;
+			this->label5->Text = L"Nombre:";
+			// 
+			// textBox2
+			// 
+			this->textBox2->Location = System::Drawing::Point(78, 119);
+			this->textBox2->Name = L"textBox2";
+			this->textBox2->Size = System::Drawing::Size(125, 31);
+			this->textBox2->TabIndex = 17;
+			// 
+			// textBox1
+			// 
+			this->textBox1->Location = System::Drawing::Point(78, 82);
+			this->textBox1->Name = L"textBox1";
+			this->textBox1->Size = System::Drawing::Size(125, 31);
+			this->textBox1->TabIndex = 16;
+			// 
 			// btnAgregarCancion
 			// 
 			this->btnAgregarCancion->BackColor = System::Drawing::Color::Honeydew;
@@ -383,109 +489,6 @@ namespace Proyecto1MeganMorales1221120 {
 			this->btnSincronizar->TabIndex = 15;
 			this->btnSincronizar->Text = L"Sincronizar fila de reproducción con la playlist";
 			this->btnSincronizar->UseVisualStyleBackColor = false;
-			// 
-			// textBox1
-			// 
-			this->textBox1->Location = System::Drawing::Point(78, 82);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(125, 31);
-			this->textBox1->TabIndex = 16;
-			// 
-			// textBox2
-			// 
-			this->textBox2->Location = System::Drawing::Point(78, 119);
-			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(125, 31);
-			this->textBox2->TabIndex = 17;
-			// 
-			// label5
-			// 
-			this->label5->AutoSize = true;
-			this->label5->Font = (gcnew System::Drawing::Font(L"Papyrus", 7.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->label5->Location = System::Drawing::Point(7, 88);
-			this->label5->Name = L"label5";
-			this->label5->Size = System::Drawing::Size(62, 21);
-			this->label5->TabIndex = 18;
-			this->label5->Text = L"Nombre:";
-			// 
-			// label6
-			// 
-			this->label6->AutoSize = true;
-			this->label6->Font = (gcnew System::Drawing::Font(L"Papyrus", 7.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->label6->Location = System::Drawing::Point(7, 125);
-			this->label6->Name = L"label6";
-			this->label6->Size = System::Drawing::Size(55, 21);
-			this->label6->TabIndex = 19;
-			this->label6->Text = L"Artista:";
-			// 
-			// btnEliminar
-			// 
-			this->btnEliminar->BackColor = System::Drawing::Color::Honeydew;
-			this->btnEliminar->Font = (gcnew System::Drawing::Font(L"Papyrus", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->btnEliminar->Location = System::Drawing::Point(26, 224);
-			this->btnEliminar->Name = L"btnEliminar";
-			this->btnEliminar->Size = System::Drawing::Size(127, 64);
-			this->btnEliminar->TabIndex = 20;
-			this->btnEliminar->Text = L"Eliminar la canción número: ";
-			this->btnEliminar->UseVisualStyleBackColor = false;
-			// 
-			// textBox3
-			// 
-			this->textBox3->Location = System::Drawing::Point(159, 238);
-			this->textBox3->Name = L"textBox3";
-			this->textBox3->Size = System::Drawing::Size(44, 31);
-			this->textBox3->TabIndex = 21;
-			// 
-			// btnReproduccionSecuencial
-			// 
-			this->btnReproduccionSecuencial->BackColor = System::Drawing::Color::Honeydew;
-			this->btnReproduccionSecuencial->Font = (gcnew System::Drawing::Font(L"Papyrus", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->btnReproduccionSecuencial->Location = System::Drawing::Point(13, 319);
-			this->btnReproduccionSecuencial->Name = L"btnReproduccionSecuencial";
-			this->btnReproduccionSecuencial->Size = System::Drawing::Size(190, 33);
-			this->btnReproduccionSecuencial->TabIndex = 14;
-			this->btnReproduccionSecuencial->Text = L"Reproducción secuencial";
-			this->btnReproduccionSecuencial->UseVisualStyleBackColor = false;
-			// 
-			// btnReproduccionAleatoria
-			// 
-			this->btnReproduccionAleatoria->BackColor = System::Drawing::Color::Honeydew;
-			this->btnReproduccionAleatoria->Font = (gcnew System::Drawing::Font(L"Papyrus", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->btnReproduccionAleatoria->Location = System::Drawing::Point(13, 358);
-			this->btnReproduccionAleatoria->Name = L"btnReproduccionAleatoria";
-			this->btnReproduccionAleatoria->Size = System::Drawing::Size(190, 33);
-			this->btnReproduccionAleatoria->TabIndex = 22;
-			this->btnReproduccionAleatoria->Text = L"Reproducción aleatoria";
-			this->btnReproduccionAleatoria->UseVisualStyleBackColor = false;
-			// 
-			// btnAnterior
-			// 
-			this->btnAnterior->BackColor = System::Drawing::Color::Honeydew;
-			this->btnAnterior->Font = (gcnew System::Drawing::Font(L"Papyrus", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->btnAnterior->Location = System::Drawing::Point(26, 397);
-			this->btnAnterior->Name = L"btnAnterior";
-			this->btnAnterior->Size = System::Drawing::Size(70, 33);
-			this->btnAnterior->TabIndex = 23;
-			this->btnAnterior->Text = L"<--";
-			this->btnAnterior->UseVisualStyleBackColor = false;
-			// 
-			// bntSiguiente
-			// 
-			this->bntSiguiente->BackColor = System::Drawing::Color::Honeydew;
-			this->bntSiguiente->Font = (gcnew System::Drawing::Font(L"Papyrus", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->bntSiguiente->Location = System::Drawing::Point(133, 397);
-			this->bntSiguiente->Name = L"bntSiguiente";
-			this->bntSiguiente->Size = System::Drawing::Size(70, 33);
-			this->bntSiguiente->TabIndex = 24;
-			this->bntSiguiente->Text = L"-->";
-			this->bntSiguiente->UseVisualStyleBackColor = false;
 			// 
 			// textBox4
 			// 
@@ -554,12 +557,12 @@ namespace Proyecto1MeganMorales1221120 {
 		}
 #pragma endregion
 
-private: void restablecerPlaylist() {
+		private: void restablecerPlaylist() {
 	
-		playlist->clear();
-		listPlaylist->Items->Clear();
+			playlist->clear();
+			listPlaylist->Items->Clear();
 		
-}
+		}
 
 	   void MarshalString(String^ s, string& os) {
 		   using namespace Runtime::InteropServices;
@@ -653,6 +656,15 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
 private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void btnCancion_Click(System::Object^ sender, System::EventArgs^ e) {
+
+	playlist->bubbleSort(new OrdenarPorNombre());
+	listPlaylist->Items->Clear();
+	llenarListBox();
+
+
+
 }
 };
 }
