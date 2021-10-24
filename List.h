@@ -1,8 +1,6 @@
 #pragma once
 #include "Ordenamiento1.h"
 
-
-
 template <typename T>
 class List
 {
@@ -67,9 +65,10 @@ public:
 		this->size = 0;
 	}
 
-	List<T>* bubbleSort(Ordenamiento1<T>* comparator) {
+	List<T>* bubbleSort(Ordenamiento1<T>* comparator, int n) {
 		Node** i = &(this->head);
-
+		
+		
 		while (*i != nullptr) {
 
 			Node** j = &(*i)->next;
@@ -80,11 +79,22 @@ public:
 				T** itemB = &(*j)->item;
 				
 				
-				if (comparator->compare(**itemA, **itemB) > 0) {
-					T* aux = *itemA;
-					*itemA = *itemB;
-					*itemB = aux;
+				if (n == 0) {
+
+					if (comparator->compare(**itemA, **itemB) > 0) {
+						T* aux = *itemA;
+						*itemA = *itemB;
+						*itemB = aux;
+					}
 				}
+				if (n == 1) {
+					if (comparator->compare(**itemA, **itemB) < 0) {
+						T* aux = *itemA;
+						*itemA = *itemB;
+						*itemB = aux;
+					}
+				}
+				
 				
 				j = &(*j)->next;
 			}
@@ -97,13 +107,12 @@ public:
 
 	void RemoveAt(int index) {
 
-		Node* temp = new Node();
-		temp = header;
+		Node* temp = this->head;
 		int count = 0;
 		while (temp != nullptr) {
 
 			if (index == 0) {
-				header = temp->next;
+				this->head = temp->next;
 				break;
 			}
 			if (index > 0 && count == (index - 1)) {
