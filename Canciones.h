@@ -2,6 +2,7 @@
 #include <string>
 
 using std::string;
+//Solo se definen los atributos y métodos
 
 class Canciones
 {
