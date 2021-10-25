@@ -25,6 +25,9 @@ namespace Proyecto1MeganMorales1221120 {
 	private: System::Windows::Forms::Button^ button2;
 	private: System::Windows::Forms::Label^ label11;
 	private: System::Windows::Forms::Label^ label12;
+	private: System::Windows::Forms::Label^ lbEstado;
+
+	private: System::Windows::Forms::Label^ label13;
 	public:
 		List<Canciones>* colaReproduccion;
 		
@@ -144,6 +147,8 @@ namespace Proyecto1MeganMorales1221120 {
 			this->btnDescendenteCancion = (gcnew System::Windows::Forms::Button());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->groupBox3 = (gcnew System::Windows::Forms::GroupBox());
+			this->lbEstado = (gcnew System::Windows::Forms::Label());
+			this->label13 = (gcnew System::Windows::Forms::Label());
 			this->bntSiguiente = (gcnew System::Windows::Forms::Button());
 			this->btnAnterior = (gcnew System::Windows::Forms::Button());
 			this->btnReproduccionAleatoria = (gcnew System::Windows::Forms::Button());
@@ -368,6 +373,8 @@ namespace Proyecto1MeganMorales1221120 {
 			// 
 			// groupBox3
 			// 
+			this->groupBox3->Controls->Add(this->lbEstado);
+			this->groupBox3->Controls->Add(this->label13);
 			this->groupBox3->Controls->Add(this->bntSiguiente);
 			this->groupBox3->Controls->Add(this->btnAnterior);
 			this->groupBox3->Controls->Add(this->btnReproduccionAleatoria);
@@ -388,6 +395,28 @@ namespace Proyecto1MeganMorales1221120 {
 			this->groupBox3->TabIndex = 15;
 			this->groupBox3->TabStop = false;
 			this->groupBox3->Text = L"Funciones de la fila de reproducción";
+			// 
+			// lbEstado
+			// 
+			this->lbEstado->AutoSize = true;
+			this->lbEstado->Font = (gcnew System::Drawing::Font(L"Papyrus", 7.8F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lbEstado->Location = System::Drawing::Point(74, 296);
+			this->lbEstado->Name = L"lbEstado";
+			this->lbEstado->Size = System::Drawing::Size(66, 22);
+			this->lbEstado->TabIndex = 26;
+			this->lbEstado->Text = L"Estado";
+			// 
+			// label13
+			// 
+			this->label13->AutoSize = true;
+			this->label13->Font = (gcnew System::Drawing::Font(L"Papyrus", 7.8F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label13->Location = System::Drawing::Point(6, 274);
+			this->label13->Name = L"label13";
+			this->label13->Size = System::Drawing::Size(210, 22);
+			this->label13->TabIndex = 25;
+			this->label13->Text = L"Estado de la reproducción: ";
 			// 
 			// bntSiguiente
 			// 
@@ -439,7 +468,7 @@ namespace Proyecto1MeganMorales1221120 {
 			// 
 			// txtPosicion
 			// 
-			this->txtPosicion->Location = System::Drawing::Point(159, 238);
+			this->txtPosicion->Location = System::Drawing::Point(159, 218);
 			this->txtPosicion->Name = L"txtPosicion";
 			this->txtPosicion->Size = System::Drawing::Size(44, 31);
 			this->txtPosicion->TabIndex = 21;
@@ -449,7 +478,7 @@ namespace Proyecto1MeganMorales1221120 {
 			this->btnEliminar->BackColor = System::Drawing::Color::Honeydew;
 			this->btnEliminar->Font = (gcnew System::Drawing::Font(L"Papyrus", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->btnEliminar->Location = System::Drawing::Point(26, 224);
+			this->btnEliminar->Location = System::Drawing::Point(26, 204);
 			this->btnEliminar->Name = L"btnEliminar";
 			this->btnEliminar->Size = System::Drawing::Size(127, 64);
 			this->btnEliminar->TabIndex = 20;
@@ -605,7 +634,7 @@ namespace Proyecto1MeganMorales1221120 {
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::MediumTurquoise;
-			this->ClientSize = System::Drawing::Size(1430, 806);
+			this->ClientSize = System::Drawing::Size(1573, 725);
 			this->Controls->Add(this->label12);
 			this->Controls->Add(this->label11);
 			this->Controls->Add(this->button2);
@@ -648,6 +677,7 @@ namespace Proyecto1MeganMorales1221120 {
 			btnSincronizar->Hide();
 			listFila->Hide();
 			groupBox3->Hide();
+			label12->Hide();
 		}
 		
 
@@ -800,22 +830,20 @@ private: System::Void btnReproducir_Click(System::Object^ sender, System::EventA
 		}
 		else {
 
-			if (colaReproduccion->isEmpty()) {
+			if (!colaReproduccion->isEmpty()) {
+				for (int i = (colaReproduccion->getSize()-1); i>=0; i--) {
+					playlist->add(colaReproduccion->get(i));
+				}
+				llenarListBox();
+			}
+			else {
+				
 				MessageBox::Show("No se seleccionó ningún archivo"
 					, "Archivo no seleccionado"
 					, MessageBoxButtons::OK
 					, MessageBoxIcon::Exclamation);
-			}
-			else {
-				
-				playlist = colaReproduccion;
-				llenarListBox();
-			}
-			
+			}	
 		}
-			
-		
-		
 }
 private: System::Void btnExportar_Click(System::Object^ sender, System::EventArgs^ e) {
 
@@ -864,6 +892,7 @@ private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e
 		btnSincronizar->Show();
 		listFila-> Show();
 		groupBox3->Show();
+		label12->Show();
 }
 };
 }
