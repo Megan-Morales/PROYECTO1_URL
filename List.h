@@ -8,6 +8,7 @@ class List
 	{
 		T* item ;
 		Node* next;
+		Node* anterior;
 
 		Node(T* item) {
 			this->item = item;
@@ -18,7 +19,6 @@ class List
 	
 	Node* head;
 	Node* tail;
-
 	int size = 0;
 
 public:

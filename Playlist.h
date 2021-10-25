@@ -22,6 +22,11 @@ namespace Proyecto1MeganMorales1221120 {
 	{
 	public:
 		List<Canciones>* playlist;
+	private: System::Windows::Forms::Button^ button2;
+	private: System::Windows::Forms::Label^ label11;
+	private: System::Windows::Forms::Label^ label12;
+	public:
+		List<Canciones>* colaReproduccion;
 		
 		Playlist(void)
 		{
@@ -31,6 +36,8 @@ namespace Proyecto1MeganMorales1221120 {
 			//TODO: agregar código de constructor aquí
 			//
 			playlist = new List<Canciones>();
+			colaReproduccion = new List<Canciones>();
+			ocultar();
 		}
 
 	protected:
@@ -78,13 +85,16 @@ namespace Proyecto1MeganMorales1221120 {
 
 	private: System::Windows::Forms::Label^ label8;
 	private: System::Windows::Forms::Button^ btnSincronizar;
+	private: System::Windows::Forms::TextBox^ txtNombre;
+	private: System::Windows::Forms::TextBox^ txtPosicion;
 
-	private: System::Windows::Forms::TextBox^ textBox1;
-	private: System::Windows::Forms::TextBox^ textBox3;
+
+
 	private: System::Windows::Forms::Button^ btnEliminar;
 	private: System::Windows::Forms::Label^ label6;
 	private: System::Windows::Forms::Label^ label5;
-	private: System::Windows::Forms::TextBox^ textBox2;
+	private: System::Windows::Forms::TextBox^ txtArtista;
+
 	private: System::Windows::Forms::Button^ bntSiguiente;
 	private: System::Windows::Forms::Button^ btnAnterior;
 	private: System::Windows::Forms::Button^ btnReproduccionAleatoria;
@@ -100,9 +110,6 @@ namespace Proyecto1MeganMorales1221120 {
 	private: System::Windows::Forms::Button^ btnDescendenteCancion;
 	private: System::Windows::Forms::Label^ label4;
 	private: System::Windows::Forms::SaveFileDialog^ saveFileDialog1;
-
-
-
 
 
 
@@ -141,12 +148,12 @@ namespace Proyecto1MeganMorales1221120 {
 			this->btnAnterior = (gcnew System::Windows::Forms::Button());
 			this->btnReproduccionAleatoria = (gcnew System::Windows::Forms::Button());
 			this->btnReproduccionSecuencial = (gcnew System::Windows::Forms::Button());
-			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
+			this->txtPosicion = (gcnew System::Windows::Forms::TextBox());
 			this->btnEliminar = (gcnew System::Windows::Forms::Button());
 			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->label5 = (gcnew System::Windows::Forms::Label());
-			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->txtArtista = (gcnew System::Windows::Forms::TextBox());
+			this->txtNombre = (gcnew System::Windows::Forms::TextBox());
 			this->btnAgregarCancion = (gcnew System::Windows::Forms::Button());
 			this->label8 = (gcnew System::Windows::Forms::Label());
 			this->btnSincronizar = (gcnew System::Windows::Forms::Button());
@@ -155,6 +162,9 @@ namespace Proyecto1MeganMorales1221120 {
 			this->label7 = (gcnew System::Windows::Forms::Label());
 			this->label9 = (gcnew System::Windows::Forms::Label());
 			this->saveFileDialog1 = (gcnew System::Windows::Forms::SaveFileDialog());
+			this->button2 = (gcnew System::Windows::Forms::Button());
+			this->label11 = (gcnew System::Windows::Forms::Label());
+			this->label12 = (gcnew System::Windows::Forms::Label());
 			this->groupBox1->SuspendLayout();
 			this->groupBox2->SuspendLayout();
 			this->groupBox3->SuspendLayout();
@@ -221,7 +231,7 @@ namespace Proyecto1MeganMorales1221120 {
 			this->label1->AutoSize = true;
 			this->label1->Font = (gcnew System::Drawing::Font(L"Papyrus", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->label1->Location = System::Drawing::Point(307, 179);
+			this->label1->Location = System::Drawing::Point(307, 138);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(189, 31);
 			this->label1->TabIndex = 5;
@@ -232,7 +242,7 @@ namespace Proyecto1MeganMorales1221120 {
 			this->label2->AutoSize = true;
 			this->label2->Font = (gcnew System::Drawing::Font(L"Papyrus", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->label2->Location = System::Drawing::Point(806, 179);
+			this->label2->Location = System::Drawing::Point(806, 138);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(277, 31);
 			this->label2->TabIndex = 6;
@@ -362,12 +372,12 @@ namespace Proyecto1MeganMorales1221120 {
 			this->groupBox3->Controls->Add(this->btnAnterior);
 			this->groupBox3->Controls->Add(this->btnReproduccionAleatoria);
 			this->groupBox3->Controls->Add(this->btnReproduccionSecuencial);
-			this->groupBox3->Controls->Add(this->textBox3);
+			this->groupBox3->Controls->Add(this->txtPosicion);
 			this->groupBox3->Controls->Add(this->btnEliminar);
 			this->groupBox3->Controls->Add(this->label6);
 			this->groupBox3->Controls->Add(this->label5);
-			this->groupBox3->Controls->Add(this->textBox2);
-			this->groupBox3->Controls->Add(this->textBox1);
+			this->groupBox3->Controls->Add(this->txtArtista);
+			this->groupBox3->Controls->Add(this->txtNombre);
 			this->groupBox3->Controls->Add(this->btnAgregarCancion);
 			this->groupBox3->Controls->Add(this->label8);
 			this->groupBox3->Font = (gcnew System::Drawing::Font(L"Papyrus", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
@@ -427,12 +437,12 @@ namespace Proyecto1MeganMorales1221120 {
 			this->btnReproduccionSecuencial->Text = L"Reproducción secuencial";
 			this->btnReproduccionSecuencial->UseVisualStyleBackColor = false;
 			// 
-			// textBox3
+			// txtPosicion
 			// 
-			this->textBox3->Location = System::Drawing::Point(159, 238);
-			this->textBox3->Name = L"textBox3";
-			this->textBox3->Size = System::Drawing::Size(44, 31);
-			this->textBox3->TabIndex = 21;
+			this->txtPosicion->Location = System::Drawing::Point(159, 238);
+			this->txtPosicion->Name = L"txtPosicion";
+			this->txtPosicion->Size = System::Drawing::Size(44, 31);
+			this->txtPosicion->TabIndex = 21;
 			// 
 			// btnEliminar
 			// 
@@ -445,6 +455,7 @@ namespace Proyecto1MeganMorales1221120 {
 			this->btnEliminar->TabIndex = 20;
 			this->btnEliminar->Text = L"Eliminar la canción número: ";
 			this->btnEliminar->UseVisualStyleBackColor = false;
+			this->btnEliminar->Click += gcnew System::EventHandler(this, &Playlist::btnEliminar_Click);
 			// 
 			// label6
 			// 
@@ -468,19 +479,19 @@ namespace Proyecto1MeganMorales1221120 {
 			this->label5->TabIndex = 18;
 			this->label5->Text = L"Nombre:";
 			// 
-			// textBox2
+			// txtArtista
 			// 
-			this->textBox2->Location = System::Drawing::Point(78, 119);
-			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(125, 31);
-			this->textBox2->TabIndex = 17;
+			this->txtArtista->Location = System::Drawing::Point(78, 119);
+			this->txtArtista->Name = L"txtArtista";
+			this->txtArtista->Size = System::Drawing::Size(125, 31);
+			this->txtArtista->TabIndex = 17;
 			// 
-			// textBox1
+			// txtNombre
 			// 
-			this->textBox1->Location = System::Drawing::Point(78, 82);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(125, 31);
-			this->textBox1->TabIndex = 16;
+			this->txtNombre->Location = System::Drawing::Point(78, 82);
+			this->txtNombre->Name = L"txtNombre";
+			this->txtNombre->Size = System::Drawing::Size(125, 31);
+			this->txtNombre->TabIndex = 16;
 			// 
 			// btnAgregarCancion
 			// 
@@ -493,6 +504,7 @@ namespace Proyecto1MeganMorales1221120 {
 			this->btnAgregarCancion->TabIndex = 9;
 			this->btnAgregarCancion->Text = L"Agregar canción";
 			this->btnAgregarCancion->UseVisualStyleBackColor = false;
+			this->btnAgregarCancion->Click += gcnew System::EventHandler(this, &Playlist::btnAgregarCancion_Click);
 			// 
 			// label8
 			// 
@@ -553,12 +565,50 @@ namespace Proyecto1MeganMorales1221120 {
 			this->label9->TabIndex = 18;
 			this->label9->Text = L"Siguiente:";
 			// 
+			// button2
+			// 
+			this->button2->BackColor = System::Drawing::Color::Honeydew;
+			this->button2->Font = (gcnew System::Drawing::Font(L"Papyrus", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->button2->Location = System::Drawing::Point(1117, 112);
+			this->button2->Name = L"button2";
+			this->button2->Size = System::Drawing::Size(205, 47);
+			this->button2->TabIndex = 19;
+			this->button2->Text = L"Iniciar fila de reproducción";
+			this->button2->UseVisualStyleBackColor = false;
+			this->button2->Click += gcnew System::EventHandler(this, &Playlist::button2_Click);
+			// 
+			// label11
+			// 
+			this->label11->AutoSize = true;
+			this->label11->Font = (gcnew System::Drawing::Font(L"Papyrus", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label11->Location = System::Drawing::Point(285, 179);
+			this->label11->Name = L"label11";
+			this->label11->Size = System::Drawing::Size(247, 31);
+			this->label11->TabIndex = 20;
+			this->label11->Text = L"-- Canción --- Artista --";
+			// 
+			// label12
+			// 
+			this->label12->AutoSize = true;
+			this->label12->Font = (gcnew System::Drawing::Font(L"Papyrus", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label12->Location = System::Drawing::Point(827, 179);
+			this->label12->Name = L"label12";
+			this->label12->Size = System::Drawing::Size(247, 31);
+			this->label12->TabIndex = 21;
+			this->label12->Text = L"-- Canción --- Artista --";
+			// 
 			// Playlist
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::MediumTurquoise;
 			this->ClientSize = System::Drawing::Size(1430, 806);
+			this->Controls->Add(this->label12);
+			this->Controls->Add(this->label11);
+			this->Controls->Add(this->button2);
 			this->Controls->Add(this->label9);
 			this->Controls->Add(this->label7);
 			this->Controls->Add(this->txtSiguiente);
@@ -590,6 +640,16 @@ namespace Proyecto1MeganMorales1221120 {
 			listPlaylist->Items->Clear();
 		
 		}
+		
+		void ocultar() {
+			label9->Hide();
+			txtSiguiente->Hide();
+			label2->Hide();
+			btnSincronizar->Hide();
+			listFila->Hide();
+			groupBox3->Hide();
+		}
+		
 
 	   void MarshalString(String^ s, string& os) {
 		   using namespace Runtime::InteropServices;
@@ -602,7 +662,6 @@ namespace Proyecto1MeganMorales1221120 {
 	private: void llenarListBox() {
 		
 		int contador=0;
-		listPlaylist->Items->Add("----- Canción ------ Artista ------");
 		while (playlist->get(contador)!=nullptr) {
 			
 			string Cancion;
@@ -613,8 +672,24 @@ namespace Proyecto1MeganMorales1221120 {
 			String^ artista = gcnew String(Artista.c_str());
 			listPlaylist->Items->Add(contador + " - " + cancion + " - "+ artista);
 			contador++;
+		}	
+	}
+
+	private: void llenarListBox2() {
+
+		int contador = 0;
+		while (colaReproduccion->get(contador) != nullptr) {
+
+			string Cancion;
+			string Artista;
+			Cancion = colaReproduccion->get(contador)->getName();
+			Artista = colaReproduccion->get(contador)->getArtist();
+			String^ cancion = gcnew String(Cancion.c_str());
+			String^ artista = gcnew String(Artista.c_str());
+			listFila->Items->Add(contador + " - " + cancion + " - " + artista);
+			contador++;
 		}
-		
+
 	}
 	
 private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -723,12 +798,20 @@ private: System::Void btnReproducir_Click(System::Object^ sender, System::EventA
 			listPlaylist->Items->Clear();
 			llenarListBox();
 		}
-		
 		else {
-			MessageBox::Show("No se seleccionó ningún archivo"
-				, "Archivo no seleccionado"
-				, MessageBoxButtons::OK
-				, MessageBoxIcon::Exclamation);
+
+			if (colaReproduccion->isEmpty()) {
+				MessageBox::Show("No se seleccionó ningún archivo"
+					, "Archivo no seleccionado"
+					, MessageBoxButtons::OK
+					, MessageBoxIcon::Exclamation);
+			}
+			else {
+				
+				playlist = colaReproduccion;
+				llenarListBox();
+			}
+			
 		}
 			
 		
@@ -740,7 +823,7 @@ private: System::Void btnExportar_Click(System::Object^ sender, System::EventArg
 		
 		if (saveFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
 			String^ playListActual;
-			for (int i = 1; i < playlist->getSize() + 1; i++) {
+			for (int i = 1; i < playlist->getSize(); i++) {
 				playListActual += ""+ listPlaylist->Items[i]+",";
 			}
 
@@ -750,11 +833,37 @@ private: System::Void btnExportar_Click(System::Object^ sender, System::EventArg
 				, MessageBoxButtons::OK
 				, MessageBoxIcon::Information);
 		}
-		
-		
-	
-		
-		
+}
+private: System::Void btnAgregarCancion_Click(System::Object^ sender, System::EventArgs^ e) {
+
+		String^ nombre;
+		String^ artista;
+		string Nombre;
+		string Artista;
+		nombre = txtNombre->Text;
+		artista = txtArtista->Text;
+		MarshalString(nombre, Nombre);
+		MarshalString(artista, Artista);
+		Canciones* cancion = new Canciones(Nombre, Artista);
+		colaReproduccion->add(cancion);
+		listFila->Items->Clear();
+		llenarListBox2();
+}
+private: System::Void btnEliminar_Click(System::Object^ sender, System::EventArgs^ e) {
+
+		int posicion = Convert::ToInt32(txtPosicion->Text);
+		colaReproduccion->RemoveAt(posicion);
+		listFila->Items->Clear();
+		llenarListBox2();
+
+}
+private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+		label9->Show();
+		txtSiguiente->Show();
+		label2->Show();
+		btnSincronizar->Show();
+		listFila-> Show();
+		groupBox3->Show();
 }
 };
 }
