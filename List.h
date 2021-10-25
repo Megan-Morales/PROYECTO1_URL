@@ -124,5 +124,18 @@ public:
 		}
 		this->size--;
 	}
+	void InsertAtStart(T* item) {
+		Node* node = new Node(item);
+		
+
+		if (this->isEmpty()) { 
+			this->head = this->tail=node;
+		}
+		else { 
+			node->next = this->head;
+			this->head = node;
+		}
+		this->size++;
+	}
 };
 
