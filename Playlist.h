@@ -49,7 +49,7 @@ namespace Proyecto1MeganMorales1221120 {
 			playlist = new List<Canciones>();
 			colaReproduccion = new List<Canciones>();
 			ocultar();
-			
+
 			btnAnterior->Enabled = false;
 			bntSiguiente->Enabled = false;
 		}
@@ -503,6 +503,7 @@ namespace Proyecto1MeganMorales1221120 {
 			this->btnReproduccionAleatoria->TabIndex = 22;
 			this->btnReproduccionAleatoria->Text = L"Reproducción aleatoria";
 			this->btnReproduccionAleatoria->UseVisualStyleBackColor = false;
+			this->btnReproduccionAleatoria->Click += gcnew System::EventHandler(this, &Playlist::btnReproduccionAleatoria_Click);
 			// 
 			// btnReproduccionSecuencial
 			// 
@@ -687,7 +688,7 @@ namespace Proyecto1MeganMorales1221120 {
 		listPlaylist->Items->Clear();
 	}
 		   void ocultar() {
-			   
+
 			   label2->Hide();
 			   btnSincronizar->Hide();
 			   listFila->Hide();
@@ -756,7 +757,7 @@ namespace Proyecto1MeganMorales1221120 {
 	}
 		   void sincronizarPlaylistyCola() {
 			   if (!colaReproduccion->isEmpty()) {
-				   for (int i = 0;  i<colaReproduccion->getSize(); i++) {
+				   for (int i = 0; i < colaReproduccion->getSize(); i++) {
 					   playlist->InsertAtStart(colaReproduccion->get(i));
 				   }
 				   if (estados == 0) { //si el estado es sin ordenamiento / no hacer nada porque no hay que ordenar nada.
@@ -923,7 +924,7 @@ namespace Proyecto1MeganMorales1221120 {
 
 	}
 	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
-		
+
 		label2->Show();
 		btnSincronizar->Show();
 		listFila->Show();
@@ -935,8 +936,8 @@ namespace Proyecto1MeganMorales1221120 {
 	}
 
 	private: System::Void btnReproduccionSecuencial_Click(System::Object^ sender, System::EventArgs^ e) {
-		btnAnterior->Enabled=true;
-		bntSiguiente->Enabled=true;
+		btnAnterior->Enabled = true;
+		bntSiguiente->Enabled = true;
 		estadosReproduccion = 0;
 		lbEstado->Text = "Secuencial";
 		if (!colaReproduccion->isEmpty()) {
@@ -956,64 +957,127 @@ namespace Proyecto1MeganMorales1221120 {
 
 		}
 	}
-	void siguiente() {
+		   void siguiente() {
 
-		if (estadosReproduccion == 0) {
-			if (!colaReproduccion->isEmpty() && countReproduccion < colaReproduccion->getSize()-1) {
-				countReproduccion++;
-				string Cancion;
-				string Artista;
-				Cancion = colaReproduccion->get(countReproduccion)->getName();
-				Artista = colaReproduccion->get(countReproduccion)->getArtist();
-				String^ cancion = gcnew String(Cancion.c_str());
-				String^ artista = gcnew String(Artista.c_str());
-				txtReproducciónActual->Text = (cancion + " - " + artista);
-				listFila->Items->Clear();
-				llenarListBox2();
-				
-			}
-			else {
+			   if (estadosReproduccion == 0) {
+				   if (!colaReproduccion->isEmpty() && countReproduccion < colaReproduccion->getSize() - 1) {
+					   countReproduccion++;
+					   string Cancion;
+					   string Artista;
+					   Cancion = colaReproduccion->get(countReproduccion)->getName();
+					   Artista = colaReproduccion->get(countReproduccion)->getArtist();
+					   String^ cancion = gcnew String(Cancion.c_str());
+					   String^ artista = gcnew String(Artista.c_str());
+					   txtReproducciónActual->Text = (cancion + " - " + artista);
+					   listFila->Items->Clear();
+					   llenarListBox2();
 
-
-			}
-		}
-		else {
-
-		}
-
-	}
-	void atras() {
-
-		if (estadosReproduccion == 0) {
-			if (!colaReproduccion->isEmpty() && countReproduccion >0) {
-
-				countReproduccion--;
-				string Cancion;
-				string Artista;
-				Cancion = colaReproduccion->get(countReproduccion)->getName();
-				Artista = colaReproduccion->get(countReproduccion)->getArtist();
-				String^ cancion = gcnew String(Cancion.c_str());
-				String^ artista = gcnew String(Artista.c_str());
-				txtReproducciónActual->Text = (cancion + " - " + artista);
-				listFila->Items->Clear();
-				llenarListBox2();
-				
-			}
-			else {
+				   }
+				   else {
 
 
-			}
-		}
-		else {
+				   }
+			   }
+			   else {
+				   if (!colaReproduccion->isEmpty() && aleatorio() < colaReproduccion->getSize() - 1) {
+					   
+					   string Cancion;
+					   string Artista;
+					   Cancion = colaReproduccion->get(aleatorio())->getName();
+					   Artista = colaReproduccion->get(aleatorio())->getArtist();
+					   String^ cancion = gcnew String(Cancion.c_str());
+					   String^ artista = gcnew String(Artista.c_str());
+					   txtReproducciónActual->Text = (cancion + " - " + artista);
+					   listFila->Items->Clear();
+					   llenarListBox2();
 
-		}
+				   }
+				   else {
 
-	}
-private: System::Void bntSiguiente_Click(System::Object^ sender, System::EventArgs^ e) {
+
+				   }
+			   }
+
+		   }
+		   void atras() {
+
+			   if (estadosReproduccion == 0) {
+				   if (!colaReproduccion->isEmpty() && countReproduccion > 0) {
+
+					   countReproduccion--;
+					   string Cancion;
+					   string Artista;
+					   Cancion = colaReproduccion->get(countReproduccion)->getName();
+					   Artista = colaReproduccion->get(countReproduccion)->getArtist();
+					   String^ cancion = gcnew String(Cancion.c_str());
+					   String^ artista = gcnew String(Artista.c_str());
+					   txtReproducciónActual->Text = (cancion + " - " + artista);
+					   listFila->Items->Clear();
+					   llenarListBox2();
+
+				   }
+				   else {
+
+
+				   }
+			   }
+			   else {
+				   if (!colaReproduccion->isEmpty() && aleatorio() > 0) {
+
+					   
+					   string Cancion;
+					   string Artista;
+					   Cancion = colaReproduccion->get(aleatorio())->getName();
+					   Artista = colaReproduccion->get(aleatorio())->getArtist();
+					   String^ cancion = gcnew String(Cancion.c_str());
+					   String^ artista = gcnew String(Artista.c_str());
+					   txtReproducciónActual->Text = (cancion + " - " + artista);
+					   listFila->Items->Clear();
+					   llenarListBox2();
+
+				   }
+				   else {
+
+
+				   }
+			   }
+
+		   }
+	private: System::Void bntSiguiente_Click(System::Object^ sender, System::EventArgs^ e) {
 		siguiente();
+	}
+	private: System::Void btnAnterior_Click(System::Object^ sender, System::EventArgs^ e) {
+		atras();
+	}
+		   int aleatorio() {
+			   int numeroAleatorio = 0;
+			   numeroAleatorio = rand() % colaReproduccion->getSize() ;
+			   return numeroAleatorio;
+		   }
+
+	private: System::Void btnReproduccionAleatoria_Click(System::Object^ sender, System::EventArgs^ e) {
+		estadosReproduccion = 1;
+		btnAnterior->Enabled = true;
+		bntSiguiente->Enabled = true;
+		lbEstado->Text = "Aleatorio";
+		if (!colaReproduccion->isEmpty()) {
+			string Cancion;
+			string Artista;
+			Cancion = colaReproduccion->get(aleatorio())->getName();
+			Artista = colaReproduccion->get(aleatorio())->getArtist();
+			String^ cancion = gcnew String(Cancion.c_str());
+			String^ artista = gcnew String(Artista.c_str());
+			txtReproducciónActual->Text = (cancion + " - " + artista);
+			listFila->Items->Clear();
+			llenarListBox2();
+
+		}
+		else {
+
+
+		}
+	}
+
+	};
 }
-private: System::Void btnAnterior_Click(System::Object^ sender, System::EventArgs^ e) {
-	atras();
-}
-};
-}
+//Para ordenar == control k, control d
