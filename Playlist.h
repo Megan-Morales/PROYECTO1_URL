@@ -24,6 +24,8 @@ namespace Proyecto1MeganMorales1221120 {
 		List<Canciones>* playlist;
 		List<Canciones>* colaReproduccion;
 		int estados = 0;
+		int estadosReproduccion = 0;
+		int countReproduccion = 0;
 
 	private: System::Windows::Forms::Button^ button2;
 	private: System::Windows::Forms::Label^ label11;
@@ -47,6 +49,9 @@ namespace Proyecto1MeganMorales1221120 {
 			playlist = new List<Canciones>();
 			colaReproduccion = new List<Canciones>();
 			ocultar();
+			
+			btnAnterior->Enabled = false;
+			bntSiguiente->Enabled = false;
 		}
 
 	protected:
@@ -109,11 +114,11 @@ namespace Proyecto1MeganMorales1221120 {
 	private: System::Windows::Forms::Button^ btnReproduccionAleatoria;
 	private: System::Windows::Forms::Button^ btnReproduccionSecuencial;
 	private: System::Windows::Forms::TextBox^ txtReproducciónActual;
-	private: System::Windows::Forms::TextBox^ txtSiguiente;
+
 
 
 	private: System::Windows::Forms::Label^ label7;
-	private: System::Windows::Forms::Label^ label9;
+
 	private: System::Windows::Forms::Button^ btnDescendenteArtista;
 	private: System::Windows::Forms::Label^ label10;
 	private: System::Windows::Forms::Button^ btnDescendenteCancion;
@@ -171,9 +176,7 @@ namespace Proyecto1MeganMorales1221120 {
 			this->btnAgregarCancion = (gcnew System::Windows::Forms::Button());
 			this->label8 = (gcnew System::Windows::Forms::Label());
 			this->txtReproducciónActual = (gcnew System::Windows::Forms::TextBox());
-			this->txtSiguiente = (gcnew System::Windows::Forms::TextBox());
 			this->label7 = (gcnew System::Windows::Forms::Label());
-			this->label9 = (gcnew System::Windows::Forms::Label());
 			this->saveFileDialog1 = (gcnew System::Windows::Forms::SaveFileDialog());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->label11 = (gcnew System::Windows::Forms::Label());
@@ -474,6 +477,7 @@ namespace Proyecto1MeganMorales1221120 {
 			this->bntSiguiente->TabIndex = 24;
 			this->bntSiguiente->Text = L"-->";
 			this->bntSiguiente->UseVisualStyleBackColor = false;
+			this->bntSiguiente->Click += gcnew System::EventHandler(this, &Playlist::bntSiguiente_Click);
 			// 
 			// btnAnterior
 			// 
@@ -486,6 +490,7 @@ namespace Proyecto1MeganMorales1221120 {
 			this->btnAnterior->TabIndex = 23;
 			this->btnAnterior->Text = L"<--";
 			this->btnAnterior->UseVisualStyleBackColor = false;
+			this->btnAnterior->Click += gcnew System::EventHandler(this, &Playlist::btnAnterior_Click);
 			// 
 			// btnReproduccionAleatoria
 			// 
@@ -510,6 +515,7 @@ namespace Proyecto1MeganMorales1221120 {
 			this->btnReproduccionSecuencial->TabIndex = 14;
 			this->btnReproduccionSecuencial->Text = L"Reproducción secuencial";
 			this->btnReproduccionSecuencial->UseVisualStyleBackColor = false;
+			this->btnReproduccionSecuencial->Click += gcnew System::EventHandler(this, &Playlist::btnReproduccionSecuencial_Click);
 			// 
 			// txtPosicion
 			// 
@@ -598,13 +604,6 @@ namespace Proyecto1MeganMorales1221120 {
 			this->txtReproducciónActual->Size = System::Drawing::Size(278, 22);
 			this->txtReproducciónActual->TabIndex = 16;
 			// 
-			// txtSiguiente
-			// 
-			this->txtSiguiente->Location = System::Drawing::Point(676, 74);
-			this->txtSiguiente->Name = L"txtSiguiente";
-			this->txtSiguiente->Size = System::Drawing::Size(217, 22);
-			this->txtSiguiente->TabIndex = 17;
-			// 
 			// label7
 			// 
 			this->label7->AutoSize = true;
@@ -615,17 +614,6 @@ namespace Proyecto1MeganMorales1221120 {
 			this->label7->Size = System::Drawing::Size(300, 38);
 			this->label7->TabIndex = 14;
 			this->label7->Text = L"Canción en reproducción";
-			// 
-			// label9
-			// 
-			this->label9->AutoSize = true;
-			this->label9->Font = (gcnew System::Drawing::Font(L"Papyrus", 13.8F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->label9->Location = System::Drawing::Point(715, 33);
-			this->label9->Name = L"label9";
-			this->label9->Size = System::Drawing::Size(138, 38);
-			this->label9->TabIndex = 18;
-			this->label9->Text = L"Siguiente:";
 			// 
 			// button2
 			// 
@@ -671,9 +659,7 @@ namespace Proyecto1MeganMorales1221120 {
 			this->Controls->Add(this->label12);
 			this->Controls->Add(this->label11);
 			this->Controls->Add(this->button2);
-			this->Controls->Add(this->label9);
 			this->Controls->Add(this->label7);
-			this->Controls->Add(this->txtSiguiente);
 			this->Controls->Add(this->txtReproducciónActual);
 			this->Controls->Add(this->groupBox3);
 			this->Controls->Add(this->groupBox2);
@@ -701,8 +687,7 @@ namespace Proyecto1MeganMorales1221120 {
 		listPlaylist->Items->Clear();
 	}
 		   void ocultar() {
-			   label9->Hide();
-			   txtSiguiente->Hide();
+			   
 			   label2->Hide();
 			   btnSincronizar->Hide();
 			   listFila->Hide();
@@ -938,8 +923,7 @@ namespace Proyecto1MeganMorales1221120 {
 
 	}
 	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
-		label9->Show();
-		txtSiguiente->Show();
+		
 		label2->Show();
 		btnSincronizar->Show();
 		listFila->Show();
@@ -950,5 +934,86 @@ namespace Proyecto1MeganMorales1221120 {
 		sincronizarPlaylistyCola();
 	}
 
-	};
+	private: System::Void btnReproduccionSecuencial_Click(System::Object^ sender, System::EventArgs^ e) {
+		btnAnterior->Enabled=true;
+		bntSiguiente->Enabled=true;
+		estadosReproduccion = 0;
+		lbEstado->Text = "Secuencial";
+		if (!colaReproduccion->isEmpty()) {
+			string Cancion;
+			string Artista;
+			Cancion = colaReproduccion->get(0)->getName();
+			Artista = colaReproduccion->get(0)->getArtist();
+			String^ cancion = gcnew String(Cancion.c_str());
+			String^ artista = gcnew String(Artista.c_str());
+			txtReproducciónActual->Text = (cancion + " - " + artista);
+			listFila->Items->Clear();
+			llenarListBox2();
+
+		}
+		else {
+
+
+		}
+	}
+	void siguiente() {
+
+		if (estadosReproduccion == 0) {
+			if (!colaReproduccion->isEmpty() && countReproduccion < colaReproduccion->getSize()-1) {
+				countReproduccion++;
+				string Cancion;
+				string Artista;
+				Cancion = colaReproduccion->get(countReproduccion)->getName();
+				Artista = colaReproduccion->get(countReproduccion)->getArtist();
+				String^ cancion = gcnew String(Cancion.c_str());
+				String^ artista = gcnew String(Artista.c_str());
+				txtReproducciónActual->Text = (cancion + " - " + artista);
+				listFila->Items->Clear();
+				llenarListBox2();
+				
+			}
+			else {
+
+
+			}
+		}
+		else {
+
+		}
+
+	}
+	void atras() {
+
+		if (estadosReproduccion == 0) {
+			if (!colaReproduccion->isEmpty() && countReproduccion >0) {
+
+				countReproduccion--;
+				string Cancion;
+				string Artista;
+				Cancion = colaReproduccion->get(countReproduccion)->getName();
+				Artista = colaReproduccion->get(countReproduccion)->getArtist();
+				String^ cancion = gcnew String(Cancion.c_str());
+				String^ artista = gcnew String(Artista.c_str());
+				txtReproducciónActual->Text = (cancion + " - " + artista);
+				listFila->Items->Clear();
+				llenarListBox2();
+				
+			}
+			else {
+
+
+			}
+		}
+		else {
+
+		}
+
+	}
+private: System::Void bntSiguiente_Click(System::Object^ sender, System::EventArgs^ e) {
+		siguiente();
+}
+private: System::Void btnAnterior_Click(System::Object^ sender, System::EventArgs^ e) {
+	atras();
+}
+};
 }
