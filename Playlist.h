@@ -13,7 +13,7 @@ namespace Proyecto1MeganMorales1221120 {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
-	using namespace System::IO; //Librería utilizada para poder utilizar el FILE
+	using namespace System::IO; //Importar la librería para poder importar y exportar archivos
 
 	/// <summary>
 	/// Resumen de Playlist
@@ -21,9 +21,9 @@ namespace Proyecto1MeganMorales1221120 {
 	public ref class Playlist : public System::Windows::Forms::Form
 	{
 	public:
-		List<Canciones>* playlist;
-		List<Canciones>* colaReproduccion;
-		int estados = 0;
+		List<Canciones>* playlist; //Inicializar la lista playlist
+		List<Canciones>* colaReproduccion; //Crear la lista de cola de reproducción
+		int estados = 0; //Variables globales para manejar estados y conteos.
 		int estadosReproduccion = 0;
 		int countReproduccion = 0;
 
@@ -683,39 +683,38 @@ namespace Proyecto1MeganMorales1221120 {
 		}
 #pragma endregion
 
-	private: void restablecerPlaylist() {
+	private: void restablecerPlaylist() { //Método para eliminar los elementos del listbox y eliminar la playlist
 		playlist->clear();
 		listPlaylist->Items->Clear();
 	}
-		   void ocultar() {
-
+		   void ocultar() { //Método que utilizo para ocultar algunos componentes del forms
 			   label2->Hide();
 			   btnSincronizar->Hide();
 			   listFila->Hide();
 			   groupBox3->Hide();
 			   label12->Hide();
 		   }
-		   void MarshalString(String^ s, string& os) {
+		   void MarshalString(String^ s, string& os) { //Método para convertir String^ a string 
 			   using namespace Runtime::InteropServices;
 			   const char* chars = (const char*)(Marshal::StringToHGlobalAnsi(s)).ToPointer();
 			   os = chars;
 			   Marshal::FreeHGlobal(IntPtr((void*)chars));
 		   }
-	private: void llenarListBox() {
+	private: void llenarListBox() { //Método para llenar el listbox de la playlist y actualiza también 
 		int contador = 0;
-		while (playlist->get(contador) != nullptr) {
+		while (playlist->get(contador) != nullptr) { //Mientras playlist sea diferente de vacio
 			string Cancion;
 			string Artista;
 			Cancion = playlist->get(contador)->getName();
 			Artista = playlist->get(contador)->getArtist();
-			String^ cancion = gcnew String(Cancion.c_str());
+			String^ cancion = gcnew String(Cancion.c_str()); //Conversión de string a String^
 			String^ artista = gcnew String(Artista.c_str());
-			listPlaylist->Items->Add(contador + " - " + cancion + " - " + artista);
-			contador++;
+			listPlaylist->Items->Add(contador + " - " + cancion + " - " + artista); //Imprimer los datos en el listbox 
+			contador++; //Se suma para ir recorriendo la playlist 
 		}
 	}
 		   void ordenarAscendenteNombre() {
-			   lbEstadoPlayList->Text = "Ascendentemente/nombre";
+			   lbEstadoPlayList->Text = "Ascendentemente/nombre"; //Imprimir el estadol orden 
 			   estados = 1;
 			   playlist->bubbleSort(new OrdenarPorNombre(), 0);
 			   listPlaylist->Items->Clear();
@@ -742,7 +741,7 @@ namespace Proyecto1MeganMorales1221120 {
 			   listPlaylist->Items->Clear();
 			   llenarListBox();
 		   }
-	private: void llenarListBox2() {
+	private: void llenarListBox2() { //Llena el listbox de la fila 
 		int contador = 0;
 		while (colaReproduccion->get(contador) != nullptr) {
 			string Cancion;
@@ -755,16 +754,16 @@ namespace Proyecto1MeganMorales1221120 {
 			contador++;
 		}
 	}
-		   void sincronizarPlaylistyCola() {
+		   void sincronizarPlaylistyCola() { //Sincronizar mi playList con la cola 
 			   if (!colaReproduccion->isEmpty()) {
 				   for (int i = 0; i < colaReproduccion->getSize(); i++) {
-					   playlist->InsertAtStart(colaReproduccion->get(i));
+					   playlist->InsertAtStart(colaReproduccion->get(i)); //Para insertar modo cola 
 				   }
 				   if (estados == 0) { //si el estado es sin ordenamiento / no hacer nada porque no hay que ordenar nada.
 					   listPlaylist->Items->Clear();
 					   llenarListBox();
 				   }
-				   else if (estados == 1) {
+				   else if (estados == 1) { // si el estado es 1, sicronizar de forma ascendente.
 					   ordenarAscendenteNombre();
 				   }
 				   else if (estados == 2) {
@@ -778,12 +777,71 @@ namespace Proyecto1MeganMorales1221120 {
 				   }
 			   }
 			   else {
-
-				   MessageBox::Show("No se seleccionó ningún archivo", "Archivo no seleccionado", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
+				   MessageBox::Show("La fila de reproducción está vacia", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			   }
 		   }
-	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-
+		   void siguiente() { //Método para avanzar entre canciones en la fila de reproducción
+			   if (estadosReproduccion == 0) { //Si el estado de reproducción es 0 es poor que es secuencial
+				   if (!colaReproduccion->isEmpty() && countReproduccion < colaReproduccion->getSize() - 1) {// Mientras la fila este llena y mi contador de reproducción sea
+					   countReproduccion++;         //Avanzar                                                    //menor a la cantidad de elementos en la cola 
+					   string Cancion;
+					   string Artista;
+					   Cancion = colaReproduccion->get(countReproduccion)->getName();
+					   Artista = colaReproduccion->get(countReproduccion)->getArtist();
+					   String^ cancion = gcnew String(Cancion.c_str());
+					   String^ artista = gcnew String(Artista.c_str());
+					   txtReproducciónActual->Text = (cancion + " - " + artista);
+				   }
+				   else {
+					   MessageBox::Show("La fila de reproducción se ha terrminado de reproducir", "", MessageBoxButtons::OK, MessageBoxIcon::Information);
+				   }
+			   }
+			   else { //Sino es 0, será aleatorio 
+				   if (!colaReproduccion->isEmpty() && aleatorio() < colaReproduccion->getSize() - 1) {
+					   string Cancion;
+					   string Artista;
+					   Cancion = colaReproduccion->get(aleatorio())->getName();
+					   Artista = colaReproduccion->get(aleatorio())->getArtist();
+					   String^ cancion = gcnew String(Cancion.c_str());
+					   String^ artista = gcnew String(Artista.c_str());
+					   txtReproducciónActual->Text = (cancion + " - " + artista);
+				   }
+			   }
+		   }
+		   void atras() {
+			   if (estadosReproduccion == 0) {
+				   if (!colaReproduccion->isEmpty() && countReproduccion > 0) { //Si el contador no es menor a 0 y sino no está vacia
+					   countReproduccion--; //regresar
+					   string Cancion;
+					   string Artista;
+					   Cancion = colaReproduccion->get(countReproduccion)->getName();
+					   Artista = colaReproduccion->get(countReproduccion)->getArtist();
+					   String^ cancion = gcnew String(Cancion.c_str());
+					   String^ artista = gcnew String(Artista.c_str());
+					   txtReproducciónActual->Text = (cancion + " - " + artista);
+				   }
+				   else {
+					   MessageBox::Show("La fila de reproducción se ha terrminado de reproducir", "", MessageBoxButtons::OK, MessageBoxIcon::Information);
+				   }
+			   }
+			   else {
+				   if (!colaReproduccion->isEmpty() && aleatorio() > 0) { //Secuencial
+					   string Cancion;
+					   string Artista;
+					   Cancion = colaReproduccion->get(aleatorio())->getName();
+					   Artista = colaReproduccion->get(aleatorio())->getArtist();
+					   String^ cancion = gcnew String(Cancion.c_str());
+					   String^ artista = gcnew String(Artista.c_str());
+					   txtReproducciónActual->Text = (cancion + " - " + artista);
+				   }
+			   }
+		   }
+		   int aleatorio() {//Función random
+			   int numeroAleatorio = 0;
+			   numeroAleatorio = rand() % colaReproduccion->getSize();
+			   return numeroAleatorio;
+		   }
+	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) { //Botón de importar
 		lbEstadoPlayList->Text = "Ninguno";
 		ofdImportar->Filter = "Archivos separados por coma (csv) | *.csv";
 		ofdImportar->FileName = "";
@@ -791,14 +849,12 @@ namespace Proyecto1MeganMorales1221120 {
 		if (ofdImportar->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
 			restablecerPlaylist();
 			//Se utiliza el objeto File para leer el archivo solo cuando el FileName es correcto
-			//Importante haber llamado al namespace System::IO antes de usar File
 			array<String^>^ archivoLineas = File::ReadAllLines(ofdImportar->FileName);
 			if (archivoLineas->Length > 0) {
 				//LLenar list playlist
 				for (int i = 0; i < archivoLineas->Length; i++) {
 					array<String^>^ columnaArchivo = archivoLineas[i]->Split(',');
 					int j = 0;
-
 					while (j < columnaArchivo->Length) {
 						array<String^>^ nomCancionArtista = columnaArchivo[j]->Split('-');
 						if (nomCancionArtista->Length >= 2) {
@@ -816,9 +872,7 @@ namespace Proyecto1MeganMorales1221120 {
 							}
 						}
 						else if (nomCancionArtista->Length == 1) {
-
 							string nameCancion;
-
 							if (nomCancionArtista[0] == "") {}
 							else {
 								MarshalString(nomCancionArtista[0], nameCancion);
@@ -840,20 +894,19 @@ namespace Proyecto1MeganMorales1221120 {
 	}
 	private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
-	private: System::Void btnCancion_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void btnCancion_Click(System::Object^ sender, System::EventArgs^ e) {//Botón de ordenar por nombre A
 		ordenarAscendenteNombre();
 	}
-	private: System::Void btnArtista_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void btnArtista_Click(System::Object^ sender, System::EventArgs^ e) {//Botón de ordenar por artista A
 		ordenarAscendenteArtista();
 	}
-	private: System::Void btnDescendenteCancion_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void btnDescendenteCancion_Click(System::Object^ sender, System::EventArgs^ e) {//Botón de ordenar por nombre D
 		ordenarDescenteNombre();
 	}
-	private: System::Void btnDescendenteArtista_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void btnDescendenteArtista_Click(System::Object^ sender, System::EventArgs^ e) {//Botón de ordenar por artista D
 		ordenarDescenteArtista();
 	}
-	private: System::Void btnReproducir_Click(System::Object^ sender, System::EventArgs^ e) {
-
+	private: System::Void btnReproducir_Click(System::Object^ sender, System::EventArgs^ e) { //Botón reproducir playlist
 		if (!playlist->isEmpty()) {
 			string Cancion;
 			string Artista;
@@ -862,12 +915,11 @@ namespace Proyecto1MeganMorales1221120 {
 			String^ cancion = gcnew String(Cancion.c_str());
 			String^ artista = gcnew String(Artista.c_str());
 			txtReproducciónActual->Text = (cancion + " - " + artista);
-			playlist->RemoveAt(0);
+			playlist->RemoveAt(0); //Elimina la canción de la playlist
 			listPlaylist->Items->Clear();
 			llenarListBox();
 		}
 		else {
-
 			if (!colaReproduccion->isEmpty()) {
 				for (int i = (colaReproduccion->getSize() - 1); i >= 0; i--) {
 					playlist->add(colaReproduccion->get(i));
@@ -875,67 +927,71 @@ namespace Proyecto1MeganMorales1221120 {
 				llenarListBox();
 			}
 			else {
-
-				MessageBox::Show("No se seleccionó ningún archivo"
-					, "Archivo no seleccionado"
-					, MessageBoxButtons::OK
-					, MessageBoxIcon::Exclamation);
+				MessageBox::Show("No hay canciones en la fila de reproducción", "No hay más canciones", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
 		}
 	}
-	private: System::Void btnExportar_Click(System::Object^ sender, System::EventArgs^ e) {
-
+	private: System::Void btnExportar_Click(System::Object^ sender, System::EventArgs^ e) { //Botón de exportar
 		saveFileDialog1->Filter = "Archivos separados por coma (csv) | *.csv";
-
 		if (saveFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
 			String^ playListActual;
 			for (int i = 0; i < playlist->getSize(); i++) {
 				playListActual += "" + listPlaylist->Items[i] + ",";
 			}
-
 			File::WriteAllText(saveFileDialog1->FileName, playListActual);
-			MessageBox::Show("Archivo guardado exitosamente"
-				, "Operación exitosa"
-				, MessageBoxButtons::OK
-				, MessageBoxIcon::Information);
+			MessageBox::Show("Archivo guardado exitosamente", "Operación exitosa", MessageBoxButtons::OK, MessageBoxIcon::Information);
+		}
+		else {
+			MessageBox::Show("Error", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 	}
-	private: System::Void btnAgregarCancion_Click(System::Object^ sender, System::EventArgs^ e) {
-
+	private: System::Void btnAgregarCancion_Click(System::Object^ sender, System::EventArgs^ e) { //Botón de agregar canción
 		String^ nombre;
 		String^ artista;
 		string Nombre;
 		string Artista;
 		nombre = txtNombre->Text;
 		artista = txtArtista->Text;
-		MarshalString(nombre, Nombre);
-		MarshalString(artista, Artista);
-		Canciones* cancion = new Canciones(Nombre, Artista);
-		colaReproduccion->add(cancion);
-		listFila->Items->Clear();
-		llenarListBox2();
+		if (artista == "") {
+			MarshalString(nombre, Nombre);
+			Canciones* cancion = new Canciones(Nombre, "Desconocido");
+			colaReproduccion->add(cancion);
+			listFila->Items->Clear();
+			llenarListBox2();
+		}
+		else if (nombre=="") {
+			MarshalString(artista, Artista);
+			Canciones* cancion = new Canciones("Sin nombre",Artista);
+			colaReproduccion->add(cancion);
+			listFila->Items->Clear();
+			llenarListBox2();
+		}
+		else {
+			MarshalString(nombre, Nombre);
+			MarshalString(artista, Artista);
+			Canciones* cancion = new Canciones(Nombre, Artista);
+			colaReproduccion->add(cancion);
+			listFila->Items->Clear();
+			llenarListBox2();
+		}
 	}
-	private: System::Void btnEliminar_Click(System::Object^ sender, System::EventArgs^ e) {
-
+	private: System::Void btnEliminar_Click(System::Object^ sender, System::EventArgs^ e) {//Eliminar la posición
 		int posicion = Convert::ToInt32(txtPosicion->Text);
 		colaReproduccion->RemoveAt(posicion);
 		listFila->Items->Clear();
 		llenarListBox2();
-
 	}
-	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
-
+	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {//Iniciar fila de reproducción
 		label2->Show();
 		btnSincronizar->Show();
 		listFila->Show();
 		groupBox3->Show();
 		label12->Show();
 	}
-	private: System::Void btnSincronizar_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void btnSincronizar_Click(System::Object^ sender, System::EventArgs^ e) {//Botón sincronizar
 		sincronizarPlaylistyCola();
 	}
-
-	private: System::Void btnReproduccionSecuencial_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void btnReproduccionSecuencial_Click(System::Object^ sender, System::EventArgs^ e) {//Botón reproducción secuencial
 		btnAnterior->Enabled = true;
 		bntSiguiente->Enabled = true;
 		estadosReproduccion = 0;
@@ -950,112 +1006,18 @@ namespace Proyecto1MeganMorales1221120 {
 			txtReproducciónActual->Text = (cancion + " - " + artista);
 			listFila->Items->Clear();
 			llenarListBox2();
-
 		}
 		else {
-
-
+			MessageBox::Show("No hay canciones en la fila de reproducción", "No hay canciones", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 	}
-		   void siguiente() {
-
-			   if (estadosReproduccion == 0) {
-				   if (!colaReproduccion->isEmpty() && countReproduccion < colaReproduccion->getSize() - 1) {
-					   countReproduccion++;
-					   string Cancion;
-					   string Artista;
-					   Cancion = colaReproduccion->get(countReproduccion)->getName();
-					   Artista = colaReproduccion->get(countReproduccion)->getArtist();
-					   String^ cancion = gcnew String(Cancion.c_str());
-					   String^ artista = gcnew String(Artista.c_str());
-					   txtReproducciónActual->Text = (cancion + " - " + artista);
-					   listFila->Items->Clear();
-					   llenarListBox2();
-
-				   }
-				   else {
-
-
-				   }
-			   }
-			   else {
-				   if (!colaReproduccion->isEmpty() && aleatorio() < colaReproduccion->getSize() - 1) {
-					   
-					   string Cancion;
-					   string Artista;
-					   Cancion = colaReproduccion->get(aleatorio())->getName();
-					   Artista = colaReproduccion->get(aleatorio())->getArtist();
-					   String^ cancion = gcnew String(Cancion.c_str());
-					   String^ artista = gcnew String(Artista.c_str());
-					   txtReproducciónActual->Text = (cancion + " - " + artista);
-					   listFila->Items->Clear();
-					   llenarListBox2();
-
-				   }
-				   else {
-
-
-				   }
-			   }
-
-		   }
-		   void atras() {
-
-			   if (estadosReproduccion == 0) {
-				   if (!colaReproduccion->isEmpty() && countReproduccion > 0) {
-
-					   countReproduccion--;
-					   string Cancion;
-					   string Artista;
-					   Cancion = colaReproduccion->get(countReproduccion)->getName();
-					   Artista = colaReproduccion->get(countReproduccion)->getArtist();
-					   String^ cancion = gcnew String(Cancion.c_str());
-					   String^ artista = gcnew String(Artista.c_str());
-					   txtReproducciónActual->Text = (cancion + " - " + artista);
-					   listFila->Items->Clear();
-					   llenarListBox2();
-
-				   }
-				   else {
-
-
-				   }
-			   }
-			   else {
-				   if (!colaReproduccion->isEmpty() && aleatorio() > 0) {
-
-					   
-					   string Cancion;
-					   string Artista;
-					   Cancion = colaReproduccion->get(aleatorio())->getName();
-					   Artista = colaReproduccion->get(aleatorio())->getArtist();
-					   String^ cancion = gcnew String(Cancion.c_str());
-					   String^ artista = gcnew String(Artista.c_str());
-					   txtReproducciónActual->Text = (cancion + " - " + artista);
-					   listFila->Items->Clear();
-					   llenarListBox2();
-
-				   }
-				   else {
-
-
-				   }
-			   }
-
-		   }
-	private: System::Void bntSiguiente_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void bntSiguiente_Click(System::Object^ sender, System::EventArgs^ e) { //Botón siguiente
 		siguiente();
 	}
-	private: System::Void btnAnterior_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void btnAnterior_Click(System::Object^ sender, System::EventArgs^ e) {//Botón anterior
 		atras();
 	}
-		   int aleatorio() {
-			   int numeroAleatorio = 0;
-			   numeroAleatorio = rand() % colaReproduccion->getSize() ;
-			   return numeroAleatorio;
-		   }
-
-	private: System::Void btnReproduccionAleatoria_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void btnReproduccionAleatoria_Click(System::Object^ sender, System::EventArgs^ e) {//Botón aleatoria 
 		estadosReproduccion = 1;
 		btnAnterior->Enabled = true;
 		bntSiguiente->Enabled = true;
@@ -1070,14 +1032,8 @@ namespace Proyecto1MeganMorales1221120 {
 			txtReproducciónActual->Text = (cancion + " - " + artista);
 			listFila->Items->Clear();
 			llenarListBox2();
-
-		}
-		else {
-
-
 		}
 	}
-
-	};
+};
 }
 //Para ordenar == control k, control d

@@ -2,7 +2,9 @@
 #include <string>
 
 using std::string;
-//Solo se definen los atributos y métodos
+//Clase canción
+//Se definen los atributos y métodos
+
 
 class Canciones
 {
@@ -10,7 +12,9 @@ class Canciones
 	string artist;
 
 public:
+	//Método construcctor
 	Canciones(string name, string artist);
+	
 	
 	string getName();
 	string getArtist();
